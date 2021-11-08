@@ -1,11 +1,22 @@
 version: '3'
+
 services:
   database:
     image: "postgres:14"
-    env_file:
-      - database.env
+    container_name: postgresql
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: dev
     volumes:
       - data1:/var/lib/postgresql/data/
+    networks:
+      - dev-network
 
 volumes:
   data1:
+
+networks:
+  dev-network:
+    driver: bridge
+

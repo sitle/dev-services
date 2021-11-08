@@ -9,12 +9,14 @@ services:
       - ./initdb.d:/docker-entrypoint-initdb.d
       - mongodb-data:/data/db/
       - mongodb-log:/var/log/mongodb/
-    env_file:
-      - .env
     environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
-      MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
+      MONGO_URL: "mongodb://mongodb:27017"
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: dev
+      MONGO_INITDB_USERNAME: dev
+      MONGO_INITDB_PASSWORD: password
+      MONGO_REPLICA_SET_NAME: rs0
     ports:
       - "27017:27017"
     networks:
