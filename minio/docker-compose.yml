@@ -15,6 +15,8 @@ x-minio-common: &minio-common
     interval: 30s
     timeout: 20s
     retries: 3
+  networks:
+    - dev-network
 
 # starts 4 docker containers running minio server instances.
 # using nginx reverse proxy, load balancing, you can access
@@ -56,6 +58,8 @@ services:
     ports:
       - "9000:9000"
       - "9001:9001"
+    networks:
+      - dev-network
     depends_on:
       - minio1
       - minio2
@@ -73,3 +77,7 @@ volumes:
   minio-data3-2:
   minio-data4-1:
   minio-data4-2:
+
+networks:
+  dev-network:
+    driver: bridge

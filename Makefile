@@ -8,6 +8,7 @@ MONGODB_IMAGE=mongo:latest
 NGINX_IMAGE=nginx:1.19.2-alpine
 MYSQL_IMAGE=mysql:5.7.36
 POSTGRESQL_IMAGE=postgres:14
+REDIS_IMAGE=redis:6.2.6
 
 run:
 		@echo ""
@@ -19,6 +20,7 @@ run:
 		@echo "SERVICE = mongodb (version : ${MONGODB_IMAGE})"
 		@echo "SERVICE = mysql (version : ${MYSQL_IMAGE})"
 		@echo "SERVICE = postgresql (version : ${POSTGRESQL_IMAGE})"
+		@echo "SERVICE = redis (version : ${REDIS_IMAGE})"
 		@echo ""
 		@echo "Autres parametres :"
 		@echo "SERVICE = sipf (Lance les services les plus courrament utilisés au SIPF)"
@@ -100,6 +102,15 @@ download-postgresql:
 
 postgresql: download-postgresql start-postgresql
 
+## REDIS
+start-redis:
+		@docker compose -f redis/docker-compose.yml up -d
+
+download-redis:
+		@docker pull ${REDIS_IMAGE}
+
+redis: download-redis start-redis
+
 # Arrête tout les services d'infrastructure
 stop:
 		@docker compose -f elasticsearch/docker-compose.yml down
@@ -108,6 +119,7 @@ stop:
 		@docker compose -f mongodb/docker-compose.yml down
 		@docker compose -f mysql/docker-compose.yml down
 		@docker compose -f postgresql/docker-compose.yml down
+		@docker compose -f redis/docker-compose.yml down
 
 # Fais le grand ménage
 clean: stop
@@ -115,4 +127,4 @@ clean: stop
 		@docker volume prune
 
 # Test
-test: download elasticsearch minio rabbitmq mongodb mysql postgresql clean
+test: download elasticsearch minio rabbitmq mongodb mysql postgresql redis clean

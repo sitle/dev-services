@@ -11,6 +11,7 @@ SERVICE = rabbitmq (version : rabbitmq:3-management-alpine)
 SERVICE = mongodb (version : mongo:latest)
 SERVICE = mysql (version : mysql:5.7.36)
 SERVICE = postgresql (version : postgres:14)
+SERVICE = redis (version : redis:6.2.6)
 
 Autres parametres :
 SERVICE = sipf (Lance les services les plus courrament utilisés au SIPF)
@@ -31,3 +32,4 @@ SERVICE = clean (Supprime la totalité des volumes non utilisés)
 - Mongodb : mongodb://dev:password@localhost:27017/dev
 - Mysql : mysql://user:password@localhost:3306/dev
 - Postgresql : postgresql://user:password@localhost:5432/dev
+- Redis : redis://user:password@localhost:6379/0
