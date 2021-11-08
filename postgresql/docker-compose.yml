@@ -4,12 +4,26 @@ services:
   database:
     image: "postgres:14"
     container_name: postgresql
+    ports: 
+      - "5432:5432"
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
       POSTGRES_DB: dev
     volumes:
       - data1:/var/lib/postgresql/data/
+    networks:
+      - dev-network
+
+  management:
+    image: "sosedoff/pgweb:0.11.9"
+    container_name: management
+    ports: 
+      - "8081:8081"
+    environment:
+      - DATABASE_URL=postgres://user:password@database:5432/dev?sslmode=disable
+    depends_on:
+      - database
     networks:
       - dev-network
 

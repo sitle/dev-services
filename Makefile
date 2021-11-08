@@ -8,6 +8,7 @@ MONGODB_IMAGE=mongo:latest
 NGINX_IMAGE=nginx:1.19.2-alpine
 MYSQL_IMAGE=mysql:5.7.36
 POSTGRESQL_IMAGE=postgres:14
+PGWEB_IMAGE=sosedoff/pgweb:0.11.9
 REDIS_IMAGE=redis:6.2.6
 
 run:
@@ -99,6 +100,7 @@ start-postgresql:
 
 download-postgresql:
 		@docker pull ${POSTGRESQL_IMAGE}
+		@docker pull ${PGWEB_IMAGE}
 
 postgresql: download-postgresql start-postgresql
 
