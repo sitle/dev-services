@@ -7,8 +7,8 @@ services:
     volumes:
       - ./mongod.conf:/etc/mongod.conf
       - ./initdb.d:/docker-entrypoint-initdb.d
-      - mongodb-data:/data/db/
-      - mongodb-log:/var/log/mongodb/
+      - data1:/data/db/
+      - log1:/var/log/mongodb/
     environment:
       MONGO_URL: "mongodb://mongodb:27017"
       MONGO_INITDB_ROOT_USERNAME: root
@@ -24,10 +24,9 @@ services:
     command: ["-f", "/etc/mongod.conf"]
 
 volumes:
-  mongodb-data:
-  mongodb-log:
+  data1:
+  log1:
 
 networks:
   dev-network:
     driver: bridge
-
