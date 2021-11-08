@@ -1,0 +1,25 @@
+version: "3.2"
+services:
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
+    ports:
+        - 5672:5672
+        - 15672:15672
+    volumes:
+        - rabbitmq-data:/var/lib/rabbitmq/
+        - rabbitmq-log:/var/log/rabbitmq
+    environment:
+            RABBITMQ_ERLANG_COOKIE: 1234567890
+            RABBITMQ_DEFAULT_USER: admin
+            RABBITMQ_DEFAULT_PASS: password
+    networks:
+        - rabbitmq
+
+volumes:
+  rabbitmq-data:
+  rabbitmq-log:
+
+networks:
+  rabbitmq:
+    driver: bridge
