@@ -1,5 +1,25 @@
 Quand j'ai besoin de développer quelques choses et que j'ai besoin de service d'infrastructure, je passe mon tempps à regarder sur internet comment les instancier. Avec ce projet, je clone et je lance une seule commande.
 
+## Usage
+
+```
+Syntaxe : make SERVICE
+
+SERVICE = elasticsearch (version : docker.elastic.co/elasticsearch/elasticsearch:7.15.1)
+SERVICE = minio (version : quay.io/minio/minio:RELEASE.2021-11-05T09-16-26Z)
+SERVICE = rabbitmq (version : rabbitmq:3-management-alpine)
+SERVICE = mongodb (version : mongo:latest)
+SERVICE = mysql (version : mysql:5.7.36)
+SERVICE = postgresql (version : postgres:14)
+
+Autres parametres :
+SERVICE = sipf (Lance les services les plus courrament utilisés au SIPF)
+SERVICE = sitle (Lance les services les plus courrament utilisés par sitle)
+SERVICE = download (Précharge l'ensemble des images)
+SERVICE = stop (Arrête tout les services)
+SERVICE = clean (Supprime la totalité des volumes non utilisés)
+```
+
 ## Comptes d'accès
 
 - Elasticsearch : http://localhost:9200
