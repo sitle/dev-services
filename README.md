@@ -12,6 +12,7 @@ SERVICE = mongodb (version : mongo:latest)
 SERVICE = mysql (version : mysql:5.7.36)
 SERVICE = postgresql (version : postgres:14)
 SERVICE = redis (version : redis:6.2.6)
+SERVICE = openldap (version : osixia/openldap:1.5.0)
 
 Autres parametres :
 SERVICE = sipf (Lance les services les plus courrament utilisés au SIPF)
@@ -33,3 +34,7 @@ SERVICE = clean (Supprime la totalité des volumes non utilisés)
 - Mysql : mysql://user:password@localhost:3306/dev
 - Postgresql : postgresql://user:password@localhost:5432/dev
 - Redis : redis://user:password@localhost:6379/0
+- Openldap :
+  - uri="ldap://localhost:389", base="dc=citizen,dc=pf", login="cn=admin,dc=citizen,dc=pf", password="password"
+  - uri="ldap://localhost:389", base="cn=config", login="cn=admin,cn=config", password="password"
+

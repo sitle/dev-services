@@ -10,6 +10,7 @@ MYSQL_IMAGE=mysql:5.7.36
 POSTGRESQL_IMAGE=postgres:14
 PGWEB_IMAGE=sosedoff/pgweb:0.11.9
 REDIS_IMAGE=redis:6.2.6
+OPENLDAP_IMAGE=osixia/openldap:1.5.0
 
 run:
 		@echo ""
@@ -22,6 +23,7 @@ run:
 		@echo "SERVICE = mysql (version : ${MYSQL_IMAGE})"
 		@echo "SERVICE = postgresql (version : ${POSTGRESQL_IMAGE})"
 		@echo "SERVICE = redis (version : ${REDIS_IMAGE})"
+		@echo "SERVICE = openldap (version : ${OPENLDAP_IMAGE})"
 		@echo ""
 		@echo "Autres parametres :"
 		@echo "SERVICE = sipf (Lance les services les plus courrament utilisés au SIPF)"
@@ -31,7 +33,7 @@ run:
 		@echo "SERVICE = clean (Supprime la totalité des volumes non utilisés)"
 
 # On précharge l'ensemble des services
-download: download-elasticsearch download-minio download-rabbitmq download-mongodb download-mysql download-postgresql
+download: download-elasticsearch download-minio download-rabbitmq download-mongodb download-mysql download-postgresql download-openldap
 
 # Lancement les services les plus communément utilisés par sitle
 sitle: start-elasticsearch start-minio start-rabbitmq start-mongodb
@@ -113,6 +115,15 @@ download-redis:
 
 redis: download-redis start-redis
 
+## OPENLDAP
+start-openldap:
+		@docker compose -f openldap/docker-compose.yml up -d
+
+download-openldap:
+		@docker pull ${OPENLDAP_IMAGE}
+
+openldap: download-openldap start-openldap
+
 # Arrête tout les services d'infrastructure
 stop:
 		@docker compose -f elasticsearch/docker-compose.yml down
@@ -122,6 +133,7 @@ stop:
 		@docker compose -f mysql/docker-compose.yml down
 		@docker compose -f postgresql/docker-compose.yml down
 		@docker compose -f redis/docker-compose.yml down
+		@docker compose -f openldap/docker-compose.yml down
 
 # Fais le grand ménage
 clean: stop
@@ -129,4 +141,4 @@ clean: stop
 		@docker volume prune
 
 # Test
-test: download elasticsearch minio rabbitmq mongodb mysql postgresql redis clean
+test: download elasticsearch minio rabbitmq mongodb mysql postgresql redis openldap clean

@@ -1,0 +1,36 @@
+version: '2'
+services:
+  openldap:
+    image: osixia/openldap:1.5.0
+    container_name: openldap
+    environment:
+      LDAP_LOG_LEVEL: "256"
+      LDAP_ORGANISATION: "Development database"
+      LDAP_DOMAIN: "citizen.pf"
+      LDAP_BASE_DN: "dc=citizen,dc=pf"
+      LDAP_ADMIN_PASSWORD: "password"
+      LDAP_CONFIG_PASSWORD: "password"
+      LDAP_READONLY_USER: "false"
+      LDAP_RFC2307BIS_SCHEMA: "false"
+      LDAP_BACKEND: "mdb"
+      KEEP_EXISTING_CONFIG: "false"
+      LDAP_REMOVE_CONFIG_AFTER_SETUP: "true"
+      LDAP_SSL_HELPER_PREFIX: "ldap"
+    tty: true
+    stdin_open: true
+    volumes:
+      - data1:/var/lib/ldap
+      - config:/etc/ldap/slapd.d
+    ports:
+      - "389:389"
+      - "636:636"
+    networks:
+      - dev-network
+
+volumes:
+  data1:
+  config:
+
+networks:
+  dev-network:
+    driver: bridge
