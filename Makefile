@@ -11,6 +11,7 @@ POSTGRESQL_IMAGE=postgres:14
 PGWEB_IMAGE=sosedoff/pgweb:0.11.9
 REDIS_IMAGE=redis:6.2.6
 OPENLDAP_IMAGE=osixia/openldap:1.5.0
+NEO4J_IMAGE=neo4j:latest
 
 run:
 		@echo ""
@@ -24,6 +25,7 @@ run:
 		@echo "SERVICE = postgresql (version : ${POSTGRESQL_IMAGE})"
 		@echo "SERVICE = redis (version : ${REDIS_IMAGE})"
 		@echo "SERVICE = openldap (version : ${OPENLDAP_IMAGE})"
+		@echo "SERVICE = neo4j (version : ${NEO4J_IMAGE})"
 		@echo ""
 		@echo "Autres parametres :"
 		@echo "SERVICE = sipf (Lance les services les plus courrament utilisés au SIPF)"
@@ -33,7 +35,7 @@ run:
 		@echo "SERVICE = clean (Supprime la totalité des volumes non utilisés)"
 
 # On précharge l'ensemble des services
-download: download-elasticsearch download-minio download-rabbitmq download-mongodb download-mysql download-postgresql download-openldap
+download: download-elasticsearch download-minio download-rabbitmq download-mongodb download-mysql download-postgresql download-openldap download-neo4j
 
 # Lancement les services les plus communément utilisés par sitle
 sitle: start-elasticsearch start-minio start-rabbitmq start-mongodb
@@ -124,6 +126,15 @@ download-openldap:
 
 openldap: download-openldap start-openldap
 
+## NEO4J
+start-neo4j:
+		@docker compose -f neo4j/docker-compose.yml up -d
+
+download-neo4j:
+		@docker pull ${NEO4J_IMAGE}
+
+neo4j: download-neo4j start-neo4j
+
 # Arrête tout les services d'infrastructure
 stop:
 		@docker compose -f elasticsearch/docker-compose.yml down
@@ -134,6 +145,7 @@ stop:
 		@docker compose -f postgresql/docker-compose.yml down
 		@docker compose -f redis/docker-compose.yml down
 		@docker compose -f openldap/docker-compose.yml down
+		@docker compose -f neo4j/docker-compose.yml down
 
 # Fais le grand ménage
 clean: stop
@@ -141,4 +153,4 @@ clean: stop
 		@docker volume prune
 
 # Test
-test: download elasticsearch minio rabbitmq mongodb mysql postgresql redis openldap clean
+test: download elasticsearch minio rabbitmq mongodb mysql postgresql redis openldap neo4j clean

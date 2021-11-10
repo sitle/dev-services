@@ -1,0 +1,22 @@
+version: '2.2'
+services:
+  neo4j:
+    image: neo4j:latest
+    container_name: neo4j
+    hostname: neo4j
+    volumes:
+      - data1:/data
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    networks:
+      - dev-network
+    environment:
+      NEO4J_AUTH: none
+
+volumes:
+  data1:
+
+networks:
+  dev-network:
+    driver: bridge

@@ -13,6 +13,7 @@ SERVICE = mysql (version : mysql:5.7.36)
 SERVICE = postgresql (version : postgres:14)
 SERVICE = redis (version : redis:6.2.6)
 SERVICE = openldap (version : osixia/openldap:1.5.0)
+SERVICE = neo4j (version : neo4j:latest)
 
 Autres parametres :
 SERVICE = sipf (Lance les services les plus courrament utilisés au SIPF)
